@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{%block content%}
+<div class="col-md-10 offset-md-1">
+
+{% if user.is_authenticated %}
+
+<style>
+    body{
+        background-color: rgba(39, 44, 41, 0.2);
+    }
+
+
+    .recipe-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        font-family: 'Roboto Mono', monospace;
+    }
+
+    .card {
+        flex: 0 0 calc(33.3333% - 20px);
+        margin: 10px;
+    }
+
+    .image-thumbnail {
+        height: 200px;
+        object-fit: cover;
+        border-radius: 5px;
+    }
+
+    .card-body {
+        text-align: center;
+    }
+
+    .btn {
+        width: 100%;
+    }
+
+    @media (max-width: 768px) {
+        .card {
+            flex: 0 0 calc(50% - 20px);
+        }
+    }
+
+    @media (max-width: 480px) {
+        .card {
+            flex: 0 0 calc(100% - 20px);
+        }
+    }
+</style>
+
+
+{% if recipes %}
+    <div class="recipe-container">
+        {% for recipe in recipes %}
+            <div class="card">
+                <img class="image-thumbnail" src="{{ recipe.image.url }}" alt="{{ recipe.name }}">
+                <div class="card-body">
+                    <small><strong>Name:</strong> {{ recipe.name }}</small>
+                    <a href="{% url 'recipe' recipe.id %}" class="btn btn-outline-dark btn-sm mt-2" style="background-color: rgba(39, 44, 41, 0.2);">OPEN</a>
+                </div>
+                <div class="card-footer text-body-secondary">
+                    {{ recipe.created_at|date:"F d, Y H:i:s" }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+
+{% else %}
+<div class="col-md-5 offset-md-4">
+<h1>Login</h1>
+<br/>
+
+<form method="POST" action="{% url 'home' %}">
+    {% csrf_token %}
+    <div class="mb-3">
+        <input type="text" class="form-control" name="username", placeholder="Username" required>
+    </div>
+    <div class="mb-3">
+        <input type="password" class="form-control" name="password", placeholder="Password" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Login</button>
+
+
+</div>
+
+
+{% endif %}
+
+{% endblock %}

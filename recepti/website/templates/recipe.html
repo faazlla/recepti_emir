@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{%block content%}
+
+<style>
+    body {
+        background-color: rgba(39, 44, 41, 0.2);
+    }
+
+    .container {
+        max-width:550px;
+    }
+
+    .card{
+        font-family: 'Roboto Mono', monospace;
+    }
+
+    .image-thumbnail {
+        width: 100%;
+        object-fit: cover;
+        border-radius: 5px;
+    }
+
+    .card-header {
+        font-size:17px;
+    }
+</style>
+
+<div class="card">
+    <div class="card-header">
+        <img class="image-thumbnail" src="{{ recipe.image.url }}" alt="{{ recipe.name }}"><br/>
+        <strong>Name of the recipe: </strong>{{ recipe.name }} 
+    </div>
+    <div class="card-body">
+  
+        
+  
+        <p class="card-text">
+        <strong>Description: </strong>{{ recipe.description }}</p></br>
+        
+        <p class="card-text">
+        <strong>Published: </strong>{{ recipe.created_at|date:"F d, Y H:i:s" }}</p></br>
+    
+        <a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
+    </div>
+</div>
+
+
+
+{% endblock %}
